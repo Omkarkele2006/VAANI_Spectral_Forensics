@@ -1,0 +1,17 @@
+# Python Cache
+__pycache__/
+*.pyc
+
+# Environment Variables 
+.env
+.venv/
+env/
+
+# Large Data Files 
+data_store/uploads/*
+!data_store/uploads/.gitkeep
+data_store/reports/*
+!data_store/reports/.gitkeep
+
+# Node Modules 
+frontend/node_modules/
