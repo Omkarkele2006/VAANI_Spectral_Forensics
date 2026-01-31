@@ -3,6 +3,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 from utils.audio_processor import generate_spectrogram
+from database.db import db
+from database.models import User, AuditLog
 
 # 1. Initialize Flask App
 app = Flask(__name__)
@@ -16,7 +18,21 @@ os.makedirs(REPORT_FOLDER, exist_ok=True)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# 3. The API Route (The "Doorway")
+# --- DATABASE CONFIGURATION ---
+# Used SQLite for development because it's file-based (no server installation needed).
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///vaani.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Connect the DB to the App
+db.init_app(app)
+
+# Create Tables automatically if they don't exist
+with app.app_context():
+    db.create_all()
+    print("✅ Database Tables Created Successfully")
+    
+# 3. The API Route
 @app.route('/analyze', methods=['POST'])
 def analyze_audio():
     """
@@ -38,7 +54,7 @@ def analyze_audio():
         # B. Save the file temporarily
         file.save(file_path)
         
-        # C. Generate Spectrogram (The function we wrote earlier!)
+        # C. Generate Spectrogram
         # We save the image in the same folder as the audio for now
         image_filename = filename.replace('.', '_') + '_spec.png'
         image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)

@@ -3,7 +3,7 @@ import requests
 # The URL of your running Flask server
 url = 'http://127.0.0.1:5000/analyze'
 
-# The file we want to upload (make sure this file exists!)
+# The file we want to upload 
 file_path = 'test_audio.wav'
 
 try:
