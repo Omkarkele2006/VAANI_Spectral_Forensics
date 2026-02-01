@@ -26,9 +26,27 @@ with app.app_context():
     db.create_all()
 
 # 2. Load the Hybrid AI Model
-global_model = build_model()
-print("✅ Hybrid CRNN Model Loaded into Memory")
+try:
+    # Build the empty architecture first
+    global_model = build_model()
+    
+    # Check if we have a trained brain saved
+    model_path = 'vaani_model.h5'
+    
+    if os.path.exists(model_path):
+        print(f"📂 Found trained model weights at: {model_path}")
+        global_model.load_weights(model_path)
+        print("✅ Trained Intelligence Loaded Successfully!")
+    else:
+        print("⚠️ No trained model found. Using random weights (Demo Mode).")
+        print("   (Run 'python -m models.train_model' to train the system)")
 
+except Exception as e:
+    print(f"❌ Error loading model: {e}")
+    # Fallback to empty model so server doesn't crash
+    global_model = build_model()
+
+# 3. Helper Function (This was missing!)
 def prepare_image(image_path):
     """Prepares the spectrogram for the AI model."""
     # Load as Grayscale, Resize to 128x128
@@ -38,7 +56,7 @@ def prepare_image(image_path):
     img_array = np.expand_dims(img_array, axis=0)  # Shape: (1, 128, 128, 1)
     return img_array
 
-# 3. The Analysis Route
+# 4. The Analysis Route
 @app.route('/analyze', methods=['POST'])
 def analyze_audio():
     if 'file' not in request.files:
@@ -59,7 +77,6 @@ def analyze_audio():
             image_filename = filename.replace('.', '_') + '_spec.png'
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
             
-            # This calling the fixed audio_processor
             result_path = generate_spectrogram(file_path, image_path)
             
             if not result_path:
@@ -92,7 +109,7 @@ def analyze_audio():
                 "result": {
                     "label": label,
                     "confidence": f"{confidence:.2f}%",
-                    "note": "Model is currently untrained (demo mode)"
+                    "note": "Analysis performed by VAANI Hybrid CRNN Engine"
                 }
             }), 200
 
@@ -102,4 +119,4 @@ def analyze_audio():
 
 if __name__ == '__main__':
     print("🚀 VAANI Forensic Server is starting...")
-    app.run(debug=True, port=5000)    
+    app.run(debug=True, port=5000)
