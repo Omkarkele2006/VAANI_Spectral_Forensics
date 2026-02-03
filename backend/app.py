@@ -82,13 +82,24 @@ def analyze_audio():
             if not result_path:
                  return jsonify({"error": "Spectrogram generation failed"}), 500
 
+            # --- REPLACEMENT FOR SECTION C IN APP.PY ---
+
             # C. Run AI Prediction
             processed_image = prepare_image(image_path)
             prediction_value = global_model.predict(processed_image)[0][0]
             
-            # Logic: > 0.5 is Synthetic, < 0.5 is Real
-            confidence = float(prediction_value) * 100
-            label = "Synthetic" if confidence > 50 else "Real"
+            # Keras Alphabetical Order: 0 = Fake, 1 = Real
+            
+            if prediction_value > 0.5:
+                # Closer to 1.0 -> Real
+                label = "Real"
+                confidence = prediction_value * 100
+            else:
+                # Closer to 0.0 -> Synthetic
+                label = "Synthetic"
+                confidence = (1 - prediction_value) * 100
+            
+            # -------------------------------------------
             
             # D. Log to Database
             new_log = AuditLog(
