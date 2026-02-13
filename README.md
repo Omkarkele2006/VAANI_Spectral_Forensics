@@ -60,8 +60,3 @@ Follow these steps to run the VAANI system locally on your machine.
 * Node.js & npm installed
 * Python 3.8+ installed
 * Anaconda (Recommended for managing ML environments)
-
-### 1. Clone the Repository
-```bash
-git clone [https://github.com/your-username/VAANI_System.git](https://github.com/your-username/VAANI_System.git)
-cd VAANI_System
