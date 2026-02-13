@@ -1,0 +1,12 @@
+File,Prediction,Confidence,Raw_Score
+file100.mp3,Synthetic,100.00%,0.0000
+file10004.wav_16k.wav_norm.wav_mono.wav_silence.wav,Real,100.00%,1.0000
+file10038.mp3.wav_16k.wav_norm.wav_mono.wav_silence.wav,Synthetic,100.00%,0.0000
+file10039.mp3,Synthetic,100.00%,0.0000
+file10054.mp3.wav_16k.wav_norm.wav_mono.wav_silence.wav,Synthetic,100.00%,0.0000
+file10061.mp3.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav,Synthetic,100.00%,0.0000
+file10144.mp3,Synthetic,100.00%,0.0000
+file1035.mp3.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav,Synthetic,100.00%,0.0000
+file10574.mp3.wav_16k.wav_norm.wav_mono.wav_silence.wav_2sec.wav,Synthetic,100.00%,0.0000
+recording14050.wav_norm_mono.wav,Synthetic,99.69%,0.0031
+recording14060.wav_norm_mono.wav,Synthetic,99.93%,0.0007

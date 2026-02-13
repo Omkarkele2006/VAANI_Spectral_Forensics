@@ -34,15 +34,15 @@ try:
     model_path = 'vaani_model.h5'
     
     if os.path.exists(model_path):
-        print(f"📂 Found trained model weights at: {model_path}")
+        print(f"Found trained model weights at: {model_path}")
         global_model.load_weights(model_path)
-        print("✅ Trained Intelligence Loaded Successfully!")
+        print("Trained Intelligence Loaded Successfully!")
     else:
-        print("⚠️ No trained model found. Using random weights (Demo Mode).")
+        print(" No trained model found. Using random weights (Demo Mode).")
         print("   (Run 'python -m models.train_model' to train the system)")
 
 except Exception as e:
-    print(f"❌ Error loading model: {e}")
+    print(f"Error loading model: {e}")
     # Fallback to empty model so server doesn't crash
     global_model = build_model()
 
@@ -129,5 +129,5 @@ def analyze_audio():
             return jsonify({"error": f"Processing Failed: {str(e)}"}), 500
 
 if __name__ == '__main__':
-    print("🚀 VAANI Forensic Server is starting...")
+    print("VAANI Forensic Server is starting...")
     app.run(debug=True, port=5000)

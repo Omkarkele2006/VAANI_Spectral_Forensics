@@ -19,14 +19,14 @@ def prepare_image(img_path):
     return img_array
 
 def run_batch_test():
-    print(f"🚀 Starting Batch Forensic Analysis on '{TEST_FOLDER}'...")
+    print(f"Starting Batch Forensic Analysis on '{TEST_FOLDER}'...")
     
     # 1. Load Model
     if not os.path.exists(MODEL_PATH):
-        print("❌ Error: Model file not found!")
+        print("Error: Model file not found!")
         return
     
-    print("🧠 Loading VAANI Super-Model...")
+    print("Loading VAANI Super-Model...")
     model = load_model(MODEL_PATH)
     
     # 2. Find Audio Files
@@ -34,11 +34,11 @@ def run_batch_test():
     files = [f for f in os.listdir(TEST_FOLDER) if f.lower().endswith(audio_extensions)]
     
     if not files:
-        print(f"❌ No audio files found in {TEST_FOLDER}. Please add some!")
+        print(f"No audio files found in {TEST_FOLDER}. Please add some!")
         return
 
     results = []
-    print(f"📂 Found {len(files)} files. Processing...\n")
+    print(f"Found {len(files)} files. Processing...\n")
 
     # 3. Process Loop
     for filename in files:
@@ -77,15 +77,15 @@ def run_batch_test():
             if os.path.exists(temp_img_path):
                 os.remove(temp_img_path)
                 
-            print(f"  ✅ Checked {filename}: {label} ({confidence:.1f}%)")
+            print(f"  Checked {filename}: {label} ({confidence:.1f}%)")
             
         except Exception as e:
-            print(f"  ❌ Failed {filename}: {e}")
+            print(f"  Failed {filename}: {e}")
             results.append({"File": filename, "Status": f"Error: {str(e)}"})
 
     # 4. Final Report
     print("\n" + "="*50)
-    print("📊 FINAL FORENSIC REPORT")
+    print("FINAL FORENSIC REPORT")
     print("="*50)
     
     df = pd.DataFrame(results)
@@ -93,7 +93,7 @@ def run_batch_test():
     
     # Save to CSV for Excel
     df.to_csv("batch_report.csv", index=False)
-    print("\n📄 Report saved to 'batch_report.csv'")
+    print("\nReport saved to 'batch_report.csv'")
 
 if __name__ == "__main__":
     run_batch_test()
